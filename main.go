@@ -149,12 +149,12 @@ func (g *game) animate() {
 			}
 		}
 	}
-	time.Sleep(15 * time.Millisecond)
+	time.Sleep(25 * time.Millisecond)
 }
 
 func (g *game) litsenKeyboardEvents() {
 	if rl.IsKeyPressed(leftArrowKey) {
-		if g.c.isRight && !g.gameOver {
+		if g.c.isRight && !g.gameOver && !g.animation.isActive {
 			g.c.isRight = false
 			for _, e := range g.c.store {
 				e[1] -= 3
@@ -166,7 +166,7 @@ func (g *game) litsenKeyboardEvents() {
 		}
 	}
 	if rl.IsKeyPressed(rightArrowKey) {
-		if !g.c.isRight && !g.gameOver {
+		if !g.c.isRight && !g.gameOver && !g.animation.isActive {
 			g.c.isRight = true
 			for _, e := range g.c.store {
 				e[1] += 3
@@ -203,7 +203,7 @@ func (c *car) draw() {
 }
 
 func (g *game) draw() {
-	rl.DrawText("Brick Game Car Racing!", 160, 30, 20, rl.Black)
+	rl.DrawText("Brick Game Car Racing!", 130, 30, 20, rl.Black)
 	rl.DrawRectangle(0, 0, int32(width)+int32(width), int32(blockSize)/2, rl.Black)
 	rl.DrawRectangle(int32(width+width-blockSize/2), 0, int32(blockSize)/2, int32(headPading), rl.Black)
 	rl.DrawRectangle(0, 0, int32(blockSize)/2, int32(headPading), rl.Black)
