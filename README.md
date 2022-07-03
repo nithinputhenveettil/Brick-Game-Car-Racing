@@ -2,7 +2,7 @@
 
 This is golang implementation of classic car racing game. 
 
-![game_play_brick_car_racing](https://user-images.githubusercontent.com/25578971/177031794-50ab021c-8d4f-4add-a034-4f013c49ab29.gif)
+![game_play_brick_car_racing](https://user-images.githubusercontent.com/25578971/177031970-b8f1eee8-ad14-4d58-b94f-7850f9b47957.gif)
 
 # Dependencies
 
