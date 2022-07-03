@@ -4,6 +4,7 @@ import (
 	"image/color"
 	"math/rand"
 	"strconv"
+	"time"
 
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
@@ -43,11 +44,18 @@ type game struct {
 	score           int
 	currentObstacle *obstacle
 	c               *car
+	animation       *animation
 }
 
 type car struct {
 	store   [][]int
 	isRight bool
+}
+
+type animation struct {
+	isActive bool
+	index    int
+	isUp     bool
 }
 
 func (c *car) reset(l int) {
@@ -82,6 +90,11 @@ func (g *game) reset() {
 		pading:  3,
 	}
 	g.c = &car{}
+	g.animation = &animation{
+		isUp:     true,
+		isActive: true,
+		index:    g.l - 1,
+	}
 	g.c.reset(g.l)
 }
 
@@ -109,6 +122,34 @@ func (g *game) nextTick() {
 		g.store = append([][]bool{gg}, g.store[0:g.l-1]...)
 		g.start = 0
 	}
+}
+
+func (g *game) animate() {
+	if g.animation.isUp {
+		if g.animation.index == 0 {
+			g.animation.isUp = false
+		} else {
+			g.animation.index -= 1
+		}
+		for i := g.l - 1; i >= g.animation.index; i-- {
+			for j := 0; j < g.w; j++ {
+				g.c.drawSingleBlock(i, j, rl.Black)
+			}
+		}
+	} else {
+		if g.animation.index == g.l-1 {
+			g.animation.isUp = true
+			g.animation.isActive = false
+		} else {
+			g.animation.index += 1
+		}
+		for i := g.animation.index; i < g.l; i++ {
+			for j := 0; j < g.w; j++ {
+				g.c.drawSingleBlock(i, j, rl.Black)
+			}
+		}
+	}
+	time.Sleep(15 * time.Millisecond)
 }
 
 func (g *game) litsenKeyboardEvents() {
@@ -202,7 +243,7 @@ func (g *game) checkGameOver() {
 	for _, e := range g.c.store {
 		if g.store[e[0]][e[1]] {
 			g.gameOver = true
-			break
+
 		}
 	}
 }
@@ -222,6 +263,10 @@ func main() {
 			g.draw()
 			rl.DrawText("Game Over!!", 10, 150, 85, rl.White)
 			rl.DrawText("Press enter key to continue!", int32(width)-60, int32(length-60), 20, rl.White)
+		} else if g.animation.isActive {
+			g.draw()
+			g.animate()
+
 		} else {
 			g.nextTick()
 			g.checkGameOver()
