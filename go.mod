@@ -1,4 +1,4 @@
-module github.com/nithinputhenveettil/brick-car-racing
+module github.com/nithinputhenveettil/brick-game-car-racing
 
 go 1.16
 
