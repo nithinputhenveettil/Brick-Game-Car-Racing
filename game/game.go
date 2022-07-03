@@ -137,7 +137,7 @@ func (g *Game) Draw() {
 			rl.DrawRectangle(x+int32(c.BlockPading), y+int32(c.BlockPading)+int32(g.start), int32(c.BlockSize-(c.BlockPading*2)), int32(c.BlockSize-(c.BlockPading*2)), col)
 		}
 	}
-	rl.DrawLine(int32(c.Width), int32(c.HeadPading), int32(c.Width), int32(c.Length), rl.Black)
+	rl.DrawLine(int32(c.Width), int32(c.HeadPading), int32(c.Width), int32(c.Length+c.HeadPading), rl.Black)
 	rl.DrawLine(int32(c.Width), int32(c.Length/2)+int32(c.HeadPading), int32(c.Width+c.Width), int32(c.Length/2)+int32(c.HeadPading), rl.Black)
 	rl.DrawText("Score", int32(c.Width+60), int32(c.HeadPading)+60, 40, rl.Black)
 	rl.DrawText(strconv.Itoa(g.score), int32(c.Width+90), int32(c.HeadPading)+150, 80, rl.Black)
@@ -151,7 +151,7 @@ func (g *Game) CheckGameOver() {
 	for _, e := range g.c.store {
 		if g.store[e[0]][e[1]] {
 			g.GameOver = true
-
+			return
 		}
 	}
 }
