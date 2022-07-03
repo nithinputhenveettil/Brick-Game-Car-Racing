@@ -65,11 +65,11 @@ func (g *Game) NextTick() {
 			if x := rand.Intn(2); x == 1 {
 				g.currentObstacle.pading = 0
 			}
-		} else if c == 1 {
+		} else if c == 4 {
 			gg[2+p], gg[4+p] = true, true
-		} else if c == 2 || c == 4 {
+		} else if c == 1 || c == 3 {
 			gg[3+p] = true
-		} else if c == 3 {
+		} else if c == 2 {
 			gg[2+p], gg[3+p], gg[4+p] = true, true, true
 		}
 		g.store = append([][]bool{gg}, g.store[0:g.l-1]...)
